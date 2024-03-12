@@ -5,10 +5,10 @@ const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');
 var fetchuser = require('../middleware/fetchuser');
-
+// indicate necessary packages
 const JWT_SECRET = '5e5510n-5ecre7-key';
-
-router.post('/createuser', [
+// the function asks the user to create a user 
+router.post('/createuser', [ // 
   body('name', 'Enter a valid name').isLength({ min: 3 }),
   body('email', 'Enter a valid email').isEmail(),
   body('password', 'Password must be atleast 5 characters').isLength({ min: 5 }),
@@ -22,10 +22,10 @@ router.post('/createuser', [
     if (user) {
       return res.status(400).json({ error: "Sorry a user with this email already exists" })
     }
-    const salt = await bcrypt.genSalt(10);
+    const salt = await bcrypt.genSalt(10); // hash password
     const secPass = await bcrypt.hash(req.body.password, salt);
 
-    user = await User.create({
+    user = await User.create({ // create a user 
       name: req.body.name,
       password: secPass,
       email: req.body.email,
@@ -46,8 +46,8 @@ router.post('/createuser', [
   }
 })
 
-
-router.post('/login', [
+// the function that asks the user to login 
+router.post('/login', [ 
   body('email', 'Enter a valid email').isEmail(),
   body('password', 'Password cannot be blank').exists(),
 ], async (req, res) => {
@@ -65,7 +65,7 @@ router.post('/login', [
       return res.status(400).json({ error: "Please try to login with correct credentials" });
     }
 
-    const passwordCompare = await bcrypt.compare(password, user.password);
+    const passwordCompare = await bcrypt.compare(password, user.password); // compare hashed password
     if (!passwordCompare) {
       success = false
       return res.status(400).json({ success, error: "Please try to login with correct credentials" });
@@ -88,7 +88,7 @@ router.post('/login', [
 
 });
 
-
+// the function that gets a user's information 
 router.post('/getuser', fetchuser,  async (req, res) => {
   try {
     userId = req.user.id;

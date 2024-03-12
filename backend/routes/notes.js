@@ -3,17 +3,19 @@ const router = express.Router();
 const fetchuser = require('../middleware/fetchuser');
 const Note = require('../models/Note');
 const { body, validationResult } = require('express-validator');
+// import necessary packages
 
+// the function that fetches all notes 
 router.get('/fetchallnotes', fetchuser, async (req, res) => {
     try {
-        const notes = await Note.find({ user: req.user.id });
+        const notes = await Note.find({ user: req.user.id }); // find note that has the requested user id by comparing 
         res.json(notes)
     } catch (error) {
         console.error(error.message);
         res.status(500).send("Internal Server Error");
     }
 })
-
+// the function that adds a note 
 router.post('/addnote', fetchuser, [
     body('title', 'Enter a valid title').isLength({ min: 3 }),
     body('description', 'Description must be atleast 5 characters').isLength({ min: 5 }),], async (req, res) => {
@@ -36,7 +38,7 @@ router.post('/addnote', fetchuser, [
             res.status(500).send("Internal Server Error");
         }
     })
-
+// the function that updates the note 
 router.put('/updatenote/:id', fetchuser, async (req, res) => {
     const { title, description, tag } = req.body;
     try {
@@ -58,7 +60,7 @@ router.put('/updatenote/:id', fetchuser, async (req, res) => {
         res.status(500).send("Internal Server Error");
     }
 })
-
+// the function that deletes a note 
 router.delete('/deletenote/:id', fetchuser, async (req, res) => {
     try {
         let note = await Note.findById(req.params.id);
