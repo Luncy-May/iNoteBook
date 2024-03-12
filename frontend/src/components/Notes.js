@@ -6,6 +6,11 @@ import AddNote from './AddNote';
 const Notes = () => {
     const context = useContext(noteContext);
     const { notes, getNotes, editNote } = context;
+    //  remember we export 
+     //  <NoteContext.Provider value={{ notes, addNote, deleteNote, editNote, getNotes }}>
+     //  {props.children}
+     //  </NoteContext.Provider>
+     // in the ../context/notes/NoteState.js 
     useEffect(() => {
         getNotes()
         // eslint-disable-next-line
@@ -14,12 +19,12 @@ const Notes = () => {
     const refClose = useRef(null)
     const [note, setNote] = useState({id: "", etitle: "", edescription: "", etag: ""})
 
-    const updateNote = (currentNote) => {
+    const updateNote = (currentNote) => { //update information 
         ref.current.click();
         setNote({id: currentNote._id, etitle: currentNote.title, edescription: currentNote.description, etag:currentNote.tag})
     }
 
-    const handleClick = (e)=>{ 
+    const handleClick = (e)=>{  // handle an event
         editNote(note.id, note.etitle, note.edescription, note.etag)
         refClose.current.click();
     }
@@ -28,8 +33,8 @@ const Notes = () => {
         setNote({...note, [e.target.name]: e.target.value})
     }
 
-    return (
-        <>
+    return ( // asks the user to update the note
+        <> 
             <AddNote />
             <button ref={ref} type="button" className="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 Launch demo modal

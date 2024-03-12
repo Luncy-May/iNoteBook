@@ -1,13 +1,13 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
-
+// the structure of the note
 const NotesSchema = new Schema({
     user:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'user'
+        type: mongoose.Schema.Types.ObjectId, // setting up type
+        ref: 'user' // setting up reference
     },
     title:{
-        type: String,
+        type: String, 
         required: true
     },
     description:{

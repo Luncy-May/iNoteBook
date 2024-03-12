@@ -1,5 +1,5 @@
 import React from 'react'
-
+// export sign up
 const Signup = () => {
     return (
         <div>

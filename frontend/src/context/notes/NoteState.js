@@ -1,15 +1,14 @@
 import NoteContext from "./noteContext";
 import { useState } from "react";
-
+// import necessary packages
 const NoteState = (props) => {
-  const host = "http://localhost:5000"
+  const host = "http://localhost:5000" // get the local address
   const notesInitial = []
-  const [notes, setNotes] = useState(notesInitial)
-
+  const [notes, setNotes] = useState(notesInitial) // we set up the list of notes that we wanna use to perform various functions below
 
   const getNotes = async () => {
-
-    const response = await fetch(`${host}/api/notes/fetchallnotes`, {
+    // fetch data from backend, basically we are getting all the notes we have currently
+    const response = await fetch(`${host}/api/notes/fetchallnotes`, { // recall: app.use('/api/notes', require('./routes/notes'))
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -22,8 +21,8 @@ const NoteState = (props) => {
 
 
   const addNote = async (title, description, tag) => {
-
-    const response = await fetch(`${host}/api/notes/addnote`, {
+   // after fetching data from backend, we add a note to the notes 
+    const response = await fetch(`${host}/api/notes/addnote`, {  // recall: app.use('/api/notes', require('./routes/notes'))
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -38,8 +37,8 @@ const NoteState = (props) => {
 
 
   const deleteNote = async (id) => {
-
-    const response = await fetch(`${host}/api/notes/deletenote/${id}`, {
+   // after fetching data from backend, we delete a note from the notes
+    const response = await fetch(`${host}/api/notes/deletenote/${id}`, {  // recall: app.use('/api/notes', require('./routes/notes'))
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -53,8 +52,8 @@ const NoteState = (props) => {
 
 
   const editNote = async (id, title, description, tag) => {
-
-    const response = await fetch(`${host}/api/notes/updatenote/${id}`, {
+   // after fetching data from backend, we edit a note in the notes
+    const response = await fetch(`${host}/api/notes/updatenote/${id}`, {  // recall: app.use('/api/notes', require('./routes/notes'))
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -65,7 +64,7 @@ const NoteState = (props) => {
     const json = await response.json(); 
 
      let newNotes = JSON.parse(JSON.stringify(notes))
-
+    // we find the note that we wanna edit 
      for (let index = 0; index < newNotes.length; index++) {
       const element = newNotes[index];
       if (element._id === id) {
