@@ -30,6 +30,22 @@ npm install react-dom react-router-dom
 
 ## Run Locally
 
+running the backend
+```bash
+#if you are not located in the backend
+cd backend 
+# run the server 
+node index.js
+```
+
+running the frontend
+```bash
+#if you are not located in the frontend
+cd frontend
+# run the client-side  
+npm start
+```
+
 ## Contributing
 
 To contribute to this project, please follow these steps:
